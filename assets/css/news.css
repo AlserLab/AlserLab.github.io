@@ -6,15 +6,7 @@
 
 /****************************************************************************** Content *****************************************************************************/
 body { padding-bottom: 70px; color: var(--global-text-color); background-color: var(--global-bg-color); }
-body {
-  margin: 0;
-  font-family: "Montserrat", sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #9A9DA2;
-  background-color: #ffffff;
-}
+
 
 body.fixed-top-nav { padding-top: 56px; }
 
