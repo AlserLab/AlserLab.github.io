@@ -8,6 +8,7 @@ body {
   color: #9A9DA2;
   background-color: #ffffff;
 }
+.container { max-width: 1000px; }
 a {
   color: #FFCC00;
   text-decoration: none;
