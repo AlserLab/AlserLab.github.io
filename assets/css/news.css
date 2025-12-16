@@ -1,4 +1,11 @@
-/* --- Begin Inlined CSS (used styles only) --- */
+/******************************************************************************* Variables used throughout the theme. To adjust anything, simply edit the variables below and rebuild the theme. *****************************************************************************/
+/******************************************************************************* Themes *****************************************************************************/
+:root { --global-bg-color: #ffffff; --global-text-color: #000000; --global-theme-color: #2962ff; --global-hover-color: #007bff; --global-footer-bg-color: #424242; --global-footer-text-color: #e8e8e8; --global-footer-link-color: #ffffff; --global-icon-color: #424242; }
+:root .fa-sun { display: none; }
+
+
+/****************************************************************************** Content *****************************************************************************/
+body { padding-bottom: 70px; color: var(--global-text-color); background-color: var(--global-bg-color); }
 body {
   margin: 0;
   font-family: "Montserrat", sans-serif;
@@ -8,7 +15,16 @@ body {
   color: #9A9DA2;
   background-color: #ffffff;
 }
+
+body.fixed-top-nav { padding-top: 56px; }
+
+body.sticky-bottom-footer { padding-bottom: 0; }
+
 .container { max-width: 1000px; }
+
+.profile img { width: 100%; }
+
+
 a {
   color: #FFCC00;
   text-decoration: none;
