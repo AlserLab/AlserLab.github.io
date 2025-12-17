@@ -37,7 +37,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #FFCC00;
   color: #31404B;
 }
-.text-uppercase {
+/*.text-uppercase {
   text-transform: uppercase !important;
 }
 .font-weight-bold {
@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .font-weight-medium {
   font-weight: 500 !important;
-}
+}*/
 .text-white {
   color: #fff !important;
 }
