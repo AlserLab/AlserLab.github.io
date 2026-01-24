@@ -334,6 +334,8 @@ td:hover {
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 3px;
   transition: all 0.2s ease;
+  color: white;
+  font-weight: bold;
 }
 
 .quality-box:hover {
@@ -341,9 +343,9 @@ td:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.quality-green { background-color: #4caf50; }
-.quality-orange { background-color: #ff9800; }
-.quality-red { background-color: #f44336; }
+.quality-green { background-color: #4caf50; color: white; }
+.quality-orange { background-color: #ff9800; color: white; }
+.quality-red { background-color: #f44336; color: white; }
 
 /* Hover tooltip for both quality text and boxes */
 .quality-char-text:hover::after,

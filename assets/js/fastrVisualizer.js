@@ -10,13 +10,18 @@ function buildMapTable(r) {
 function qualityToAccuracy(q) {
   // Phred score to accuracy percentage
   const errorProb = Math.pow(10, -q / 10);
-  return ((1 - errorProb) * 100).toFixed(1);
+  return ((1 - errorProb) * 100).toFixed(2);
 }
 
 function qualityColor(q) {
-  if (q >= 30) return 'green';
-  if (q >= 20) return 'orange';
-  return 'red';
+  // Convert quality score to accuracy percentage
+  const errorProb = Math.pow(10, -q / 10);
+  const accuracy = (1 - errorProb) * 100;
+  
+  // Color based on accuracy percentage thresholds
+  if (accuracy >= 99.99) return 'green';      // 99.99% or higher
+  if (accuracy >= 99.9) return 'orange';      // 99.9% to 99.99%
+  return 'red';                                // Below 99.9%
 }
 
 function generateImage() {
