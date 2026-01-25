@@ -45,7 +45,7 @@
 
 <body class="fixed-top-nav" style="padding-bottom: 0px;">
 
-<!-- ================= NAVBAR (UNCHANGED) ================= -->
+<!-- ================= NAVBAR ================= -->
 <header>
     <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
         <div class="container">
@@ -64,7 +64,9 @@
                     <li class="nav-item"><a class="nav-link" href="/index.html">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="/people/index.html">People</a></li>
                     <li class="nav-item"><a class="nav-link" href="/research/index.html">Research</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="#">Publication</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/teaching/index.html">Teaching</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/publications/index.html">Publications</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="/tools/index.html">Tools<span class="sr-only">(current)</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="/news/index.html">News</a></li>
                     <li class="nav-item"><a class="nav-link" href="/opportunities/index.html">Work with us</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contact/index.html">Contact</a></li>
@@ -84,10 +86,6 @@
             <h2 class="post-title font-weight-bold">
                 FASTR: Reimagining FASTQ via Compact Image-Inspired Representation
             </h2>
-
-            <p class="post-description">
-                International Symposium on Molecular Biology (ISMB), 2026
-            </p>
         </header>
 
         <article>
@@ -105,40 +103,34 @@
 
             <hr>
 
+            <!-- Main Figure -->
+            <div style="text-align:center; margin-bottom: 20px;">
+                <img src="/assets/img/FASTR-fig1.png" 
+                     alt="FASTR Main Figure" style="max-width:70%; height:auto; border:1px solid #ccc; padding:5px;">
+            </div>
+
+            <hr>
+
             <h4 class="text-danger">Abstract</h4>
             <p style="text-align: justify;">
-                High-throughput sequencing (HTS) enables population-scale genomics but
-                generates massive datasets that strain storage, transfer, and analysis
-                pipelines. FASTQ, the dominant sequencing format for over two decades,
-                stores one byte per nucleotide and one byte per quality score, resulting
-                in inefficient I/O and significant redundancy.
+                Motivation: High-throughput sequencing (HTS) enables population-scale genomics but generates massive datasets, creating bottlenecks in storage, transfer, and analysis. FASTQ, the standard format for over two decades, stores one byte per base and one byte per quality score, leading to inefficient I/O, high storage costs, and redundancy. Existing compression tools can mitigate some issues, but often introduce costly decompression or complex dependency issues.
             </p>
 
             <p style="text-align: justify;">
-                We introduce <strong>FASTR</strong>, a lossless, computation-native successor
-                to FASTQ that encodes each nucleotide together with its quality score into
-                a single byte using implicit partitioned range encoding. FASTR reduces file
-                size by at least 2× while remaining fully reversible and directly usable for
-                downstream analysis without decompression.
-            </p>
-
-            <p style="text-align: justify;">
-                FASTR enables machine-learning-ready representations and integrates
-                seamlessly with existing tools such as minimap2. We provide a massively
-                parallel FASTQ–FASTR conversion ecosystem and demonstrate improved
-                compression ratios, faster runtimes, and reduced data movement across
-                Illumina, HiFi, and Oxford Nanopore datasets.
+                Results: We introduce <strong>FASTR</strong>, a lossless, computation-native successor to FASTQ that encodes each nucleotide together with its base quality score into a single 8-bit value. FASTR reduces file size by at least 2x while remaining fully reversible and directly usable for downstream analyses. Applying general-purpose compression tools on FASTR consistently yields higher compression ratios, 2.47, 3.64, and 4.8x faster compression, and 2.34, 1.96, 1.75x faster decompression than on FASTQ across Illumina, HiFi, and ONT reads. FASTR is machine-learning-ready, allowing reads to be consumed directly as numerical vectors or image-like representations. We provide a highly parallel software ecosystem for FASTQ/FASTR conversion and show that FASTR integrates with existing tools, such as minimap2, with minimal interface changes and no performance overhead. By eliminating decompression costs and reducing data movement, FASTR lays the foundation for scalable genomics analyses and real-time sequencing workflows.
             </p>
 
             <hr>
 
-            <h4 class="text-danger">Key Contributions</h4>
+            <h4 class="text-danger">Features</h4>
             <ul>
-                <li>Lossless successor to FASTQ with implicit base–quality encoding</li>
-                <li>≥2× reduction in storage footprint</li>
-                <li>Massively parallel FASTQ–FASTR conversion</li>
-                <li>Drop-in compatibility with existing genomics tools</li>
-                <li>Machine-learning-ready numeric and image-inspired format</li>
+                <li>FASTR is at least 2x less in size than FASTQ, and hence better to read, process, transfer</li>
+                <li>FASTR can be further compressed using general-purpose compression tools, such as gzip, pigz, ...</li>
+                <li>Extremely fast (multithreaded) and lossless FASTR-to-FASTQ & FASTQ-to-FASTR conversion</li>
+                <li>FASTR supports data from all prominent sequencing technologies (Illumina, ONT, PacBio's HiFi, and PacBio's CLR), single-end and paired-end reads, and SRA formats (<a href="https://www.ncbi.nlm.nih.gov/sra" target="_blank">https://www.ncbi.nlm.nih.gov/sra</a>)</li>
+                <li>FASTR supports all widely-used Phred quality scores (Phred42, Phred63, Phred68Solexa, Phred94, Illumina RTA3, Illumina RTA4, and custom mathematical formulas)</li>
+                <li>Flexible Output: binary (1 uint8 per FASTR value), integer (3 uint8s per FASTR value), with/without header</li>
+                <li>FASTR is compatible with minimap2 with no (or <2%) overhead, and with machine learning pipelines (i.e., numerical vectors)</li>
             </ul>
 
             <hr>
@@ -149,6 +141,18 @@
                     GitHub:
                     <a href="https://github.com/ALSER-Lab/FASTR" target="_blank">
                         https://github.com/ALSER-Lab/FASTR
+                    </a>
+                </li>
+                <li>
+                    BioRxiv:
+                    <a href="https://www.biorxiv.org/content/10.64898/2026.01.22.701172v1" target="_blank">
+                        https://www.biorxiv.org/content/10.64898/2026.01.22.701172v1
+                    </a>
+                </li>
+                <li>
+                    Visualizer:
+                    <a href="https://alserlab.github.io/tools/fastr/FASTR_Visualizer/" target="_blank">
+                        https://alserlab.github.io/tools/fastr/FASTR_Visualizer/
                     </a>
                 </li>
             </ul>
@@ -164,23 +168,19 @@
         </article>
     </div>
 </div>
+
+<!-- ================= FOOTER ================= -->
 <footer class="text-center text-lg-start text-dark" style="background-color: #ECEFF1" >
-    <!-- Grid container -->
     <div class="container p-4">
-        <!--Grid row-->
         <div class="row mt-4">
-            <!--Grid column-->
             <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
                 <h5 class="text-uppercase mb-4">Connect with us</h5>
-
                 <p class="mt-4" style="font-size: 26px;">
                     <a href="https://twitter.com/mealser"><i style="color: #007bff" class="fab fa-twitter"></i></a>
                     <a href="https://scholar.google.com.tr/citations?user=wnYVkJIAAAAJ&hl=en"><i style = "color: #007bff" class="fas fa-graduation-cap"></i></a>
                     <a href="https://github.com/mealser"><i style = "color: #007bff" class="fab fa-github"></i></a>
                     <a href="https://www.linkedin.com/in/mohammed-alser-06bbabb1/"><i style = "color: #007bff" class="fab fa-linkedin"></i></a>
-                    <!--<a href="mailto:alser@usc.edu"><i class="fas fa-envelope"></i></a>-->
                 </p>
-
                 <ul class="fa-ul" style="margin-left: 1.65em;text-align: left;">
                     <li class="mb-3">
                         <span class="fa-li"><a href=""><i style = "color: #007bff" class="fas fa-home"></i></a></span>
@@ -204,37 +204,25 @@
                     </li>
                 </ul>
             </div>
-            <!--Grid column-->
 
-            <!--Grid column-->
             <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase mb-4 pb-1">Visit us</h5>
                 <ul class="fa-ul" style="margin-left: 1.65em;">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3317.210118674171!2d-84.38775170000001!3d33.755235799999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f50386501ea7e7%3A0x7273991ca97e4234!2s25%20Park%20Pl%20NE%2C%20Atlanta%2C%20GA%2030303!5e0!3m2!1sen!2sus!4v1722203237213!5m2!1sen!2sus" width="250" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </ul>
             </div>
-            <!--Grid column-->
 
-            <!--Grid column-->
             <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase mb-4">Our online visitors</h5>
                 <a href='https://clustrmaps.com/site/1c0nd'  title='Visit tracker'><img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=200&t=tt&d=8izY-Hk3PAHhRnkbARB_EJ8dcZq4WwqThHCKdzJSolk&co=0095ff&ct=000000'/>
                 </a>
             </div>
-            <!--Grid column-->
         </div>
-        <!--Grid row-->
     </div>
-    <!-- Grid container -->
-    <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)" >
         © 2025 Copyright: ALSER Lab, <a class="text-dark" href="https://AlserLab.github.io/">AlserLab.github.io</a>, All rights reserved. Developed by Akshat Prasanna.
     </div>
-    <!-- Copyright -->
 </footer>
-
-<!-- Footer -->
-
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js"></script>

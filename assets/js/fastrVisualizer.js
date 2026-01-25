@@ -19,9 +19,11 @@ function qualityColor(q) {
   const accuracy = (1 - errorProb) * 100;
   
   // Color based on accuracy percentage thresholds
-  if (accuracy >= 99.99) return 'green';      // 99.99% or higher
-  if (accuracy >= 99.9) return 'orange';      // 99.9% to 99.99%
-  return 'red';                                // Below 99.9%
+  // Most high quality scores will be >= 99.99%, so we need stricter thresholds
+  if (accuracy >= 99.999) return 'green';      // 99.999% or higher (Q >= 50)
+  if (accuracy >= 99.99) return 'green';       // 99.99% or higher (Q >= 40)
+  if (accuracy >= 99.9) return 'orange';       // 99.9% to 99.99% (Q 30-40)
+  return 'red';                                 // Below 99.9% (Q < 30)
 }
 
 function generateImage() {
