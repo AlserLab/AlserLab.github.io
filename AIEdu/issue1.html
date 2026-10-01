@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Issue 1: The Policy Landscape | GSU CS AI in Education</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #f2f4f8;
+  color: #1a1a1a;
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+* {
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+  -ms-hyphens: none !important;
+}
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav {
+  background: #fff;
+  border-bottom: 3px solid #003878;
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.nav-logo { padding: 0.75rem 0; }
+.nav-logo img { height: 44px; width: auto; display: block; }
+.nav-links { display: flex; gap: 0; }
+.nav-link {
+  padding: 0 1rem; height: 72px;
+  display: flex; align-items: center;
+  font-size: 13px; font-weight: 500; color: #555;
+  border-bottom: 3px solid transparent; margin-bottom: -3px;
+  transition: color 0.15s, border-color 0.15s; white-space: nowrap;
+}
+.nav-link:hover { color: #003878; }
+.nav-link.active { color: #003878; border-bottom-color: #003878; font-weight: 600; }
+.nav-link.disabled { color: #bbb; cursor: default; pointer-events: none; }
+.nav-link.home { color: #003878; font-size: 12px; }
+.nav-link.home:hover { text-decoration: underline; }
+
+/* PAGE */
+.page { max-width: 680px; margin: 2rem auto 4rem; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #e0e0e0; }
+
+/* ISSUE HEADER */
+.issue-header { background: #fff; border-bottom: 1px solid #eee; padding: 1.5rem 2rem 1.25rem; }
+.issue-header-top { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem; }
+.issue-num { background: #003878; color: #fff; font-size: 11px; font-weight: 600; border-radius: 20px; padding: 3px 10px; }
+.tag-pill { font-size: 11px; font-weight: 600; border-radius: 20px; padding: 3px 10px; background: #e8f0fb; color: #1a4db0; }
+.issue-date { font-size: 12px; color: #aaa; margin-left: auto; }
+.issue-header h1 { font-size: 22px; font-weight: 600; color: #111; line-height: 1.3; margin-bottom: 0.25rem; }
+.issue-header .sub { font-size: 14px; color: #888; }
+
+/* HERO IMG */
+.hero-img { width: 100%; height: 200px; object-fit: cover; display: block; }
+
+/* BODY */
+.body { padding: 2rem; }
+.opening { font-size: 15px; color: #444; line-height: 1.8; border-left: 3px solid #003878; padding-left: 1rem; margin-bottom: 2rem; }
+hr { border: none; border-top: 1px solid #eee; margin: 2rem 0; }
+.section { margin-bottom: 2rem; }
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #003878; margin-bottom: 0.5rem; }
+.section h2 { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 0.75rem; line-height: 1.35; }
+.section p { font-size: 14px; color: #444; line-height: 1.75; margin-bottom: 0.75rem; }
+
+/* SPLIT */
+.split { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem; }
+.split img { width: 110px; height: 80px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+.split-text p { margin: 0; font-size: 14px; color: #444; line-height: 1.65; }
+
+/* STACKED IMAGE */
+.img-stack { margin-bottom: 1rem; }
+.img-stack img { width: 100%; height: 220px; object-fit: contain; object-position: center center; border-radius: 8px; display: block; margin-bottom: 0.75rem; background: #f0f0f0; }
+.img-stack p { margin: 0; font-size: 14px; color: #444; line-height: 1.65; }
+
+/* HIGHLIGHT */
+.highlight { background: #fff8e6; border: 1px solid #f0c950; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.25rem 0; display: flex; gap: 0.75rem; align-items: flex-start; }
+.highlight-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.highlight p { font-size: 14px; color: #5a4000; line-height: 1.65; margin: 0; }
+.highlight strong { color: #8a5c00; font-weight: 600; }
+
+/* PILLS */
+.insight-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+.insight-pill { background: #f0f4ff; border: 1px solid #d0daf5; border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 500; color: #2a4db0; }
+
+/* CARDS */
+.cards-grid { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+.card-link { display: flex; align-items: center; gap: 1rem; border: 1px solid #e5e5e5; border-radius: 10px; padding: 0.9rem 1rem; background: #fff; transition: border-color 0.15s, box-shadow 0.15s; cursor: pointer; }
+.card-link:hover { border-color: #003878; box-shadow: 0 2px 8px rgba(0,56,120,0.08); }
+.card-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.card-icon.gsu { background: #e8f0fb; } .card-icon.mit { background: #fde8e8; } .card-icon.gt { background: #e8f3e8; }
+.card-body { flex: 1; min-width: 0; }
+.card-source { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #999; margin-bottom: 2px; }
+.card-title { font-size: 14px; font-weight: 600; color: #111; line-height: 1.35; margin-bottom: 3px; }
+.card-desc { font-size: 12px; color: #777; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-arrow { color: #ccc; font-size: 18px; flex-shrink: 0; }
+.card-link:hover .card-arrow { color: #003878; }
+
+/* QUESTION */
+.question-block { background: #f7f8fa; border-radius: 10px; padding: 1.1rem 1.25rem; }
+.q-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #999; margin-bottom: 0.4rem; }
+.question-block p { font-size: 14px; color: #333; line-height: 1.7; margin: 0; font-style: italic; }
+
+/* NEXT / PREV NAV */
+.issue-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 2rem; }
+.issue-nav a {
+  display: flex; align-items: center; gap: 8px;
+  background: #f7f8fa; border: 1px solid #e5e5e5; border-radius: 10px;
+  padding: 0.85rem 1.1rem; font-size: 13px; font-weight: 600; color: #333;
+  transition: border-color 0.15s, background 0.15s; flex: 1;
+}
+.issue-nav a:hover { border-color: #003878; background: #f0f4ff; color: #003878; }
+.issue-nav a.disabled { opacity: 0.35; pointer-events: none; }
+.issue-nav a.next { justify-content: flex-end; text-align: right; }
+.issue-nav .center-link { flex: 0; white-space: nowrap; font-size: 12px; color: #888; text-decoration: underline; text-underline-offset: 3px; }
+.issue-nav .center-link:hover { color: #003878; }
+
+/* IMG CARDS (MIT / GT) */
+.img-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
+.img-card {
+  display: flex; flex-direction: column;
+  border: 1px solid #e5e5e5; border-radius: 10px;
+  overflow: hidden; background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.img-card:hover { border-color: #003878; box-shadow: 0 2px 12px rgba(0,56,120,0.1); }
+.img-card-thumb { width: 100%; height: 140px; overflow: hidden; background: #f0f0f0; }
+.img-card-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.img-card-body { padding: 0.75rem 0.85rem 0.85rem; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.img-card-body .card-source { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: #999; }
+.img-card-body .card-title { font-size: 13px; font-weight: 600; color: #111; line-height: 1.35; }
+.img-card-body .card-desc { font-size: 11px; color: #777; line-height: 1.5; margin-top: 2px; flex: 1; }
+.img-card-cta { font-size: 12px; font-weight: 600; color: #003878; margin-top: 8px; }
+.img-card:hover .img-card-cta { text-decoration: underline; }
+@media (max-width: 480px) { .img-cards { grid-template-columns: 1fr; } }
+
+/* AIAS BLOCK */
+.aias-block {
+  margin-top: 1.25rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+.aias-header {
+  padding: 1rem 1.25rem 0.75rem;
+  background: #f7f8fa;
+  border-bottom: 1px solid #eee;
+}
+.aias-badge {
+  display: inline-block;
+  background: #003878; color: #fff;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  border-radius: 20px; padding: 3px 9px;
+  margin-bottom: 0.5rem;
+}
+.aias-header p { font-size: 13px; color: #444; line-height: 1.65; margin: 0; }
+.aias-header strong { color: #111; }
+.aias-img {
+  width: 100%; display: block;
+  border-bottom: 1px solid #eee;
+}
+.aias-levels {
+  padding: 0.75rem 1.25rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
+.aias-level {
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  font-size: 13px; color: #333; line-height: 1.5;
+  border-left: 3px solid #ccc;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0 4px 4px 0;
+  background: #fafafa;
+}
+.aias-level strong { color: #111; }
+.aias-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.aias-link {
+  display: block;
+  text-align: center;
+  font-size: 13px; font-weight: 600; color: #003878;
+  padding: 0.85rem;
+  border-top: 1px solid #eee;
+  background: #f7f8fa;
+  transition: background 0.15s;
+}
+.aias-link:hover { background: #e8f0fb; }
+
+/* NEXT SECTION */
+.next-section { background: #f0f4ff; border-radius: 10px; padding: 1.25rem; display: flex; gap: 1rem; align-items: center; }
+.next-icon { width: 44px; height: 44px; background: #003878; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.next-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6680bb; margin-bottom: 3px; }
+.next-title { font-size: 14px; color: #1a2a5a; line-height: 1.55; }
+
+/* FOOTER */
+.footer { background: #f7f8fa; border-top: 1px solid #eee; padding: 1.75rem 2rem 1.5rem; }
+.sig-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 1rem; }
+.sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1.25rem; }
+.sig-person {
+  display: flex; align-items: center; gap: 0.65rem;
+  padding: 0.55rem 0.75rem; border-radius: 8px;
+  border: 1px solid #e5e5e5; background: #fff;
+  transition: border-color 0.15s, background 0.15s;
+  cursor: pointer;
+}
+.sig-person:hover { border-color: #003878; background: #f0f4ff; }
+.sig-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #003878; color: #fff;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; letter-spacing: 0.02em;
+}
+.sig-info { display: flex; flex-direction: column; min-width: 0; }
+.sig-info strong { font-size: 13px; font-weight: 600; color: #111; line-height: 1.2; }
+.sig-info span { font-size: 11px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.footer-note { font-size: 11px; color: #aaa; line-height: 1.6; }
+
+@media (max-width: 500px) {
+  .page { margin: 0; border-radius: 0; border: none; }
+  .body { padding: 1.25rem; }
+  .issue-header { padding: 1.25rem; }
+  .footer { padding: 1.25rem; }
+  .nav { padding: 0 1rem; }
+  .nav-link { padding: 0 0.55rem; font-size: 12px; }
+  .split { flex-direction: column; }
+  .split img { width: 100%; height: 140px; }
+  .issue-nav { flex-wrap: wrap; }
+  .issue-nav .center-link { order: -1; width: 100%; text-align: center; }
+  .sig-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <img src="images/issue1/logo.png" alt="GSU Computer Science">
+  </div>
+  <div class="nav-links">
+    <a class="nav-link home" href="hub.html">&#8592; All Issues</a>
+    <a class="nav-link active" href="issue-1.html">Issue 1</a>
+    <a class="nav-link disabled">Issue 2</a>
+    <a class="nav-link disabled">Issue 3</a>
+    <a class="nav-link disabled">Issue 4</a>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div style="max-width:720px; margin:0 auto; padding: 1.5rem 1rem 4rem;">
+<div class="page">
+
+  <!-- ISSUE HEADER -->
+  <div class="issue-header">
+    <div class="issue-header-top">
+      <span class="issue-num">Issue 1</span>
+      <span class="tag-pill">Policy</span>
+      <span class="issue-date">October 2, 2026 · 3 min read</span>
+    </div>
+    <h1>The Policy Landscape</h1>
+    <div class="sub">Where GSU stands and what MIT and Georgia Tech are doing</div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <p class="opening">
+      Welcome to the first issue from the AI in Education Committee. Each issue covers one focused topic: a policy update, a tool, a classroom experiment. We point you to the resources that matter most. Brief by design. We are here to help, not overwhelm.
+    </p>
+
+    <hr>
+
+    <!-- SECTION 1: GSU POLICY -->
+    <div class="section">
+      <div class="section-label">GSU Policy</div>
+      <h2>Understanding GSU's official stance on AI</h2>
+      <div class="img-stack">
+          <img src="images/issue1/gsu-policy.jpg" alt="GSU CETLOE AI in Teaching and Learning">
+          <p>GSU has two documents you should know about. The first is the <strong>university wide AI policy</strong> covering responsible use, data security, and academic integrity for all faculty, staff, and students. The second is the <strong>AI Policy Supplement</strong> released in August 2026, which provides more specific guidance for academic settings and makes clear that course level AI norms are the instructor's responsibility.</p>
+        </div>
+      <p>Together these documents form the institutional floor. What you build on top of it is up to you: how you handle AI in your assignments, your grading, your office hours. Which is exactly why reading them matters.</p>
+      <div class="cards-grid">
+        <a class="card-link" href="https://gsu.policystat.com/policy/token_access/3916c854-9eea-4e9c-a678-a8f0356f0f44/" target="_blank" rel="noopener">
+          <div class="card-icon gsu">🏛️</div>
+          <div class="card-body">
+            <div class="card-source">GSU · University Policy</div>
+            <div class="card-title">GSU Artificial Intelligence Policy</div>
+            <div class="card-desc">The official university wide policy on AI use for faculty, staff, and students</div>
+          </div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card-link" href="https://gsu.policystat.com/doc_attachment/view/73391148/NzMzOTExNDg:1xC5QD:w1hiLo7YPSKzfs3FOaTsUQca4cczglcKPvjuAC7pN90/AI%2520Policy%2520Supplement%25208%25202026.pdf.pdf" target="_blank" rel="noopener">
+          <div class="card-icon gsu">📄</div>
+          <div class="card-body">
+            <div class="card-source">GSU · August 2026 Supplement</div>
+            <div class="card-title">AI Policy Supplement: Academic Settings</div>
+            <div class="card-desc">More specific guidance for instructors on academic integrity and classroom use</div>
+          </div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- SECTION 2: SYLLABUS STATEMENT -->
+    <div class="section">
+      <div class="section-label">Action item for faculty</div>
+      <h2>Does your syllabus say anything about AI?</h2>
+      <p>
+        Whether you encourage AI use, discourage it, or take a nuanced middle ground, students deserve to know your position from day one. We encourage all faculty to include a clear statement about AI in their syllabi this semester.
+      </p>
+      <div class="highlight">
+        <div class="highlight-icon">📌</div>
+        <p>GSU's CETLOE has put together ready to use <strong>syllabus statement templates</strong> that you can adopt or adapt for your course. They cover a range of stances, from "AI not permitted" to "AI encouraged with attribution" so you do not have to write something from scratch.</p>
+      </div>
+      <div class="cards-grid">
+        <a class="card-link" href="https://cetloe.gsu.edu/instructor-resources/constructing-a-syllabus/#cetloe-recommendations" target="_blank" rel="noopener">
+          <div class="card-icon gsu">📝</div>
+          <div class="card-body">
+            <div class="card-source">GSU · CETLOE</div>
+            <div class="card-title">AI Syllabus Statement Recommendations</div>
+            <div class="card-desc">Ready to use language you can paste directly into your syllabus</div>
+          </div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+
+      <div class="aias-block">
+        <div class="aias-header">
+          <span class="aias-badge">GSU Recommends</span>
+          <p>For each assignment, GSU encourages faculty to specify the permitted level of AI use. A simple and widely adopted framework for this is the <strong>AI Assessment Scale (AIAS)</strong> giving students a clear, numbered signal for every task, from no AI at all to full AI collaboration.</p>
+        </div>
+        <img class="aias-img" src="images/issue1/aias-chart.png" alt="The AI Assessment Scale (AIAS) v2.1 — five levels from No AI to AI Exploration">
+        <div class="aias-levels">
+          <div class="aias-level" style="border-left-color:#4dc6e0;">
+            <span class="aias-num" style="background:#4dc6e0;color:#003;">1</span>
+            <div><strong>No AI</strong> Controlled environment, fully independent work</div>
+          </div>
+          <div class="aias-level" style="border-left-color:#7ed6a0;">
+            <span class="aias-num" style="background:#7ed6a0;color:#003;">2</span>
+            <div><strong>AI Planning</strong> AI supports topic exploration and outlining only</div>
+          </div>
+          <div class="aias-level" style="border-left-color:#a0a0e8;">
+            <span class="aias-num" style="background:#a0a0e8;color:#003;">3</span>
+            <div><strong>AI Collaboration</strong> AI assists drafting; student must evaluate and refine</div>
+          </div>
+          <div class="aias-level" style="border-left-color:#f5e08a;">
+            <span class="aias-num" style="background:#f5e08a;color:#003;">4</span>
+            <div><strong>Full AI</strong> AI involvement expected; assessed on critical direction of AI</div>
+          </div>
+          <div class="aias-level" style="border-left-color:#f5a0c8;">
+            <span class="aias-num" style="background:#f5a0c8;color:#003;">5</span>
+            <div><strong>AI Exploration</strong> Creative, open ended AI use; approaches co designed</div>
+          </div>
+        </div>
+        <a class="aias-link" href="https://aiassessmentscale.com/" target="_blank" rel="noopener">
+          Learn more about the AI Assessment Scale (AIAS) &#8594;
+        </a>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- SECTION 3: GEMINI TIP -->
+    <div class="section">
+      <div class="section-label">Did you know?</div>
+      <h2>All GSU faculty and staff have a free Gemini Advanced account</h2>
+      <div class="img-stack">
+          <img src="images/issue1/gemini.jpg" alt="Google Gemini Pro AI">
+          <p>You already have access to one of the most capable AI tools available, at no cost. Simply log into <strong>gemini.google.com</strong> using your campus email (<em>campusID@gsu.edu</em>) and you will be signed into Gemini Advanced automatically through GSU's Google Workspace license.</p>
+        </div>
+      <p>This includes Gemini's most powerful model, NotebookLM for research and document analysis, and integration with Google Drive and Docs. A great place to start before exploring any other AI tool.</p>
+      <div class="cards-grid">
+        <a class="card-link" href="https://technology.gsu.edu/technology-services/productivity-collaboration/google-gemini-and-notebooklm/" target="_blank" rel="noopener">
+          <div class="card-icon" style="background:#e8f8f0;">🤖</div>
+          <div class="card-body">
+            <div class="card-source">GSU Technology Services</div>
+            <div class="card-title">Google Gemini & NotebookLM at GSU</div>
+            <div class="card-desc">How to access your free account, what is included, and tips for getting started</div>
+          </div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- SECTION 4: PEER INSTITUTIONS -->
+    <div class="section">
+      <div class="section-label">What peer institutions are doing</div>
+      <h2>MIT and Georgia Tech have published their AI playbooks</h2>
+      <p>Both released major reports this fall. They are worth your attention not because we should copy them, but because they have done the hard thinking first and the lessons transfer directly to a CS department.</p>
+
+      <div class="highlight">
+        <div class="highlight-icon">⚡</div>
+        <p><strong>MIT's headline finding:</strong> AI can now credibly complete most undergraduate assignments, a signal that assessment design needs rethinking from the ground up. Their term for student over reliance on AI without critical thinking: <strong>"cognitive surrender."</strong></p>
+      </div>
+
+      <div class="img-cards">
+        <a class="img-card" href="https://aiandeducation.mit.edu/report/" target="_blank" rel="noopener">
+          <div class="img-card-thumb">
+            <img src="images/issue1/mit-cover.jpg" alt="MIT AI and Education Report">
+          </div>
+          <div class="img-card-body">
+            <div class="card-source">MIT · August 2026</div>
+            <div class="card-title">Ad Hoc Committee Report: AI in Teaching, Learning and Research</div>
+            <div class="card-desc">Six guiding principles, survey data, and concrete assessment redesign ideas</div>
+            <div class="img-card-cta">Read the report →</div>
+          </div>
+        </a>
+        <a class="img-card" href="https://provost.gatech.edu/academic-ai-strategy" target="_blank" rel="noopener">
+          <div class="img-card-thumb">
+            <img src="images/issue1/gt-cover.jpg" alt="Georgia Tech Academic AI Playbook 2026">
+          </div>
+          <div class="img-card-body">
+            <div class="card-source">Georgia Tech · August 2026</div>
+            <div class="card-title">Academic AI Strategy and Playbook</div>
+            <div class="card-desc">67 faculty authored articles, 20 real classroom lessons, every college represented</div>
+            <div class="img-card-cta">Read the playbook →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- SECTION 5: NEXT ISSUE TEASER -->
+    <div class="section">
+      <div class="section-label">Coming in Issue 2</div>
+      <div class="next-section">
+        <div class="next-icon">▶</div>
+        <div class="next-body">
+          <div class="next-label">Up next</div>
+          <div class="next-title">We will demystify all GSU AI resources, especially those at <strong style="color:#003878;">technology.gsu.edu/ai</strong>, and show concrete ways to involve AI in your teaching and classroom, from day one assignments to office hours.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREV / NEXT -->
+    <div class="issue-nav">
+      <a class="disabled" href="#">&#8592; Previous</a>
+      <a class="center-link" href="hub.html">All Issues</a>
+      <a class="next disabled" href="#">Next &#8594;</a>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- FOOTER / SIGNATURES -->
+  <div class="footer">
+    <div class="sig-label">From the AI in Education Committee</div>
+    <div class="sig-grid">
+      <a class="sig-person" href="mailto:malser@gsu.edu">
+        <div class="sig-avatar">MA</div>
+        <div class="sig-info"><strong>Mohammed Alser</strong><span>malser@gsu.edu</span></div>
+      </a>
+      <a class="sig-person" href="mailto:anemira1@gsu.edu">
+        <div class="sig-avatar">AN</div>
+        <div class="sig-info"><strong>Alina Nemira</strong><span>anemira1@gsu.edu</span></div>
+      </a>
+      <a class="sig-person" href="mailto:cgao8@gsu.edu">
+        <div class="sig-avatar">LG</div>
+        <div class="sig-info"><strong>Lan Gao</strong><span>cgao8@gsu.edu</span></div>
+      </a>
+      <a class="sig-person" href="mailto:djames56@gsu.edu">
+        <div class="sig-avatar">DJ</div>
+        <div class="sig-info"><strong>David James</strong><span>djames56@gsu.edu</span></div>
+      </a>
+      <a class="sig-person" href="mailto:yoonlee@gsu.edu">
+        <div class="sig-avatar">YL</div>
+        <div class="sig-info"><strong>Yoon Jae Lee</strong><span>yoonlee@gsu.edu</span></div>
+      </a>
+      <a class="sig-person" href="mailto:pxu4@gsu.edu">
+        <div class="sig-avatar">PX</div>
+        <div class="sig-info"><strong>Ping Xu</strong><span>pxu4@gsu.edu</span></div>
+      </a>
+      <a class="sig-person" href="mailto:hzhu17@gsu.edu">
+        <div class="sig-avatar">HZ</div>
+        <div class="sig-info"><strong>Huadi Zhu</strong><span>hzhu17@gsu.edu</span></div>
+      </a>
+    </div>
+    <div class="footer-note">Department of Computer Science · Georgia State University<br>Internal newsletter for GSU CS faculty and staff. Not for public distribution.</div>
+  </div>
+
+</div>
+</div>
+
+</body>
+</html>
